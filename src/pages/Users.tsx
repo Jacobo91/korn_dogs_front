@@ -1,5 +1,5 @@
 import React from 'react';
-import { createUser, getUsers } from '../../lib/services';
+import { createUser } from '../../lib/services';
 import { User } from 'types';
 import Card  from '../components/Card';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
@@ -31,8 +31,6 @@ const initialStateUSer = {
 
 function Users() {
 
-    // const [isLoading, setIsLoading] = React.useState(false);
-    const [users, setUsers] = React.useState<User[]>([]);
     const [newUser, setNewUser] = React.useState(initialStateUSer);
 
     function HandleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -76,8 +74,8 @@ function Users() {
         <div className=''>
 
             <div className='users-gal'>
-                {users && (
-                    data.map((user) => (
+                {data && (
+                    data.map((user: User) => (
                         <LazyLoadComponent key={user._id} visibleByDefault={false}>
                             <Card user={user}/>
                         </LazyLoadComponent>
