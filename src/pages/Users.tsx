@@ -8,8 +8,9 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useAPI } from '../hooks/useAPI';
 
-const initialStateUSer =         {
+const initialStateUSer = {
     firstname: "",
     lastname: "",
     address: "",
@@ -30,7 +31,7 @@ const initialStateUSer =         {
 
 function Users() {
 
-    const [isLoading, setIsLoading] = React.useState(false);
+    // const [isLoading, setIsLoading] = React.useState(false);
     const [users, setUsers] = React.useState<User[]>([]);
     const [newUser, setNewUser] = React.useState(initialStateUSer);
 
@@ -55,23 +56,20 @@ function Users() {
         
     }
 
-    React.useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                setIsLoading(true);
-                const data = await getUsers();
-                setUsers(data)
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setIsLoading(false)
-            }
-        };
-        fetchUsers();
-    }, []);
+    const { isLoading, error, data } = useAPI(
+        "users", 
+        "users", 
+        {
+            refetchOnMount: false
+        }
+    )
 
     if (isLoading) {
         return <p>Loading...</p>
+    }
+
+    if (error) {
+        return <p>Error</p>
     }
 
     return (
@@ -79,7 +77,7 @@ function Users() {
 
             <div className='users-gal'>
                 {users && (
-                    users.map((user) => (
+                    data.map((user) => (
                         <LazyLoadComponent key={user._id} visibleByDefault={false}>
                             <Card user={user}/>
                         </LazyLoadComponent>

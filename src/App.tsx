@@ -8,6 +8,7 @@ import Users from './pages/Users'
 import Inventory from './pages/Inventory'
 import DailyOps from './pages/DailyOps'
 import UserProfile from './pages/UserProfile'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
   QueryClient,
   QueryClientProvider
@@ -42,6 +43,7 @@ function App() {
           </div>
         </main>
       </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
 }
