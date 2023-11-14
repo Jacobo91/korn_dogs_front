@@ -231,5 +231,35 @@ export const products = [
         size: "80g",
         type: "supply"
     },
+    {
+        _id: 22,
+        quantity: 0,
+        image: "https://onedrive.live.com/embed?resid=2C2A5AA2C881B47B%21154&authkey=%21ADTJZxwrNARLvvg&width=500&height=500",
+        cost: 1300,
+        supplier: "olimpica",
+        name: "Cheese Korn Dog",
+        size: "80g",
+        type: "product"
+    },
+    {
+        _id: 23,
+        quantity: 0,
+        image: "https://onedrive.live.com/embed?resid=2C2A5AA2C881B47B%21154&authkey=%21ADTJZxwrNARLvvg&width=500&height=500",
+        cost: 1300,
+        supplier: "olimpica",
+        name: "Sausage Korn Dog",
+        size: "80g",
+        type: "product"
+    },
+    {
+        _id: 24,
+        quantity: 0,
+        image: "https://onedrive.live.com/embed?resid=2C2A5AA2C881B47B%21154&authkey=%21ADTJZxwrNARLvvg&width=500&height=500",
+        cost: 1300,
+        supplier: "",
+        name: "Sausage and Cheese Korn Dog",
+        size: "",
+        type: "product"
+    },
 ]
 

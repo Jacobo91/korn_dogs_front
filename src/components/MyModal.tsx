@@ -18,8 +18,8 @@ interface MyModalProps {
 
 export default function MyModal({ open, trackedPO, setOpen } : MyModalProps) {
     
-    const [error, setError] = React.useState<string>("");
-    const [isLoading, setIsLoading] = React.useState<boolean>(false);
+    // const [error, setError] = React.useState<string>("");
+    // const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
     const saveOnDailyOps = async () => {
         console.log(trackedPO);

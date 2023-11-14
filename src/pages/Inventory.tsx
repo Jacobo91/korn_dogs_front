@@ -91,7 +91,7 @@ function Inventory() {
                                 </button>
                             </div>
                             <div className="product-gal">    
-                                {filteredProducts.map((product) => (
+                                {filteredProducts.filter((product) => product.type !== "product").map((product) => (
                                         <div className="product-card" key={product._id}>
                                             <LazyLoadImage src={product.image} alt={`gaseose ${product.name} de ${product.size}`} effect="blur" />
                                             <h5>{product.name.replace(/_/g, " ")}</h5>
