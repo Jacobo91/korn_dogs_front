@@ -3,11 +3,6 @@ import { lazy, Suspense } from 'react';
 import { LoginModal, Navbar } from './components'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import {
-  QueryClient,
-  QueryClientProvider
-} from '@tanstack/react-query'
-
 const Home = lazy(() => import('./pages/Home'));
 const Ventas = lazy(() => import('./pages/Ventas'));
 const Preps = lazy(() => import('./pages/Preps'));
@@ -17,6 +12,12 @@ const Inventory = lazy(() => import('./pages/Inventory'));
 const PageNotFound = lazy(() => import('./pages/PageNotFound'));
 const DailyOps = lazy(() => import('./pages/DailyOps'));
 const UserProfile = lazy(() => import('./pages/UserProfile'));
+import {
+  QueryClient,
+  QueryClientProvider
+} from '@tanstack/react-query'
+
+
 
 const queryClient = new QueryClient()
 

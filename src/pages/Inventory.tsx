@@ -8,12 +8,17 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import MyModal from "../components/MyModal";
+import {PurchaseOrder} from '../types'
 
 function Inventory() {
 
+    const initialPurchaseOrder = { items: [], date: '', type: '', user: '' };
+
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [user, setUser] = useState<string>("");
+    const [open, setOpen] = useState(false);
+    const [trackedPO, setTrackedPO] = useState<PurchaseOrder>(initialPurchaseOrder);
 
     const colors = {
         manzana: "#DE3478",
@@ -40,9 +45,14 @@ function Inventory() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const creationDate = new Date().toDateString().toLowerCase();
-        const trackedPurchaseOrder = {items: [...purchaseOrder], date: creationDate, type: "purchase", user }
-        console.log(trackedPurchaseOrder);
+        const date = new Date().getDate();
+        const month = new Date().getMonth();
+        const year = new Date().getFullYear();
+        const creationDate = `${date}/${month + 1}/${year}`;
+        const trackedPurchaseOrder = {items: [...purchaseOrder]}
+        setOpen(true);
+        const updatedTrackedPurchasedOrder = {items: trackedPurchaseOrder.items.filter((product) => product.quantity > 0), date: creationDate, type: "purchase", user};
+        setTrackedPO(updatedTrackedPurchasedOrder)
         // send purchaseOrder to DailyOps in DB and update Inventory in DB
     }
 
@@ -57,10 +67,12 @@ function Inventory() {
         } else {
         console.log("No 'user' data found in localStorage.");
     }
-}, [])
+}, [trackedPO])
+
 
     return (
         <div className="page-wrapper">
+            <MyModal open={open} trackedPO={trackedPO} setOpen={setOpen}/>
             <div className='inner-wrapper'>
                 <Accordion>
                     <AccordionSummary
@@ -77,18 +89,16 @@ function Inventory() {
                                 <button type="submit" className="btn btn-purchase">
                                     Purchase products
                                 </button>
-                                <p>Total: 0</p>
                             </div>
                             <div className="product-gal">    
                                 {filteredProducts.map((product) => (
                                         <div className="product-card" key={product._id}>
                                             <LazyLoadImage src={product.image} alt={`gaseose ${product.name} de ${product.size}`} effect="blur" />
-                                            <h5>{product.name}</h5>
+                                            <h5>{product.name.replace(/_/g, " ")}</h5>
                                             <p style={{ color: colors[product.name.replace("_", "") as keyof typeof colors] || "black" }}>{product.size}</p>
                                             <input type="number" min={0} placeholder="quantity" name={`${product.name} ${product.size}`} onChange={handleChange}/>
                                             <p>{`$${product.cost.toLocaleString()}`}</p>
                                             <p>{product.supplier}</p>
-                                            <p>Total: {`$${0}`}</p>
                                         </div>
                                 ))}                    
                             </div>

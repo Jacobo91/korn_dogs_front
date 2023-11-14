@@ -55,8 +55,15 @@ export type Product = {
         image: string,
         color?: string,
         cost: number,
-        supplier: string,
+        supplier?: string,
         name: string,
         size: string,
         type: string
+}
+
+export interface PurchaseOrder {
+    items: Product[];
+    date: string;
+    type: string;
+    user: string
 }
