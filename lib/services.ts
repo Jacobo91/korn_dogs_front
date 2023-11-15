@@ -1,5 +1,7 @@
 import axios from "axios";
-import { NewUser } from "types";
+import { NewUser, Product, Operation } from "types";
+
+/* users */
 
 export const authorizeUser = async (username: string, password: string) => {
   const options = {
@@ -76,12 +78,71 @@ export const createUser = async (newUser: NewUser) => {
   }
 };
 
-/*
+/* inventories */
 
-  axios.request(options).then(function (response) {
-    console.log(response.data);
-  }).catch(function (error) {
-    console.error(error);
-  });
+export const createProduct = async (product: Product) => {
+  const options = {
+    method: 'POST',
+    url: 'http://localhost:3000/create-product',
+    headers: {Authorization: 'Basic YWRtaW46KlZhbGVudGlub18yMDE5Kg==', 'Content-Type': 'application/json', },
+    data: JSON.stringify(product)
+  };
 
-*/
+  try {
+    const response = await axios.request(options);
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+export const updateProducts = async (items: Product[]) => {
+  const options = {
+    method: 'PUT',
+    url: 'http://localhost:3000/inventories/updateQuantities',
+    headers: {Authorization: 'Basic YWRtaW46KlZhbGVudGlub18yMDE5Kg==', 'Content-Type': 'application/json', },
+    data: { items }
+  };
+
+  try {
+    const response = await axios.request(options)
+    return response.data
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+/* daily ops */
+
+export const createOperation = async (operation: Operation) => {
+  const options = {
+    method: 'POST',
+    url: 'http://localhost:3000/log-operation',
+    headers: {Authorization: 'Basic YWRtaW46KlZhbGVudGlub18yMDE5Kg==', 'Content-Type': 'application/json', },
+    data: JSON.stringify(operation)
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+export const getOperations = async () => {
+  const options = {
+    method: 'GET',
+    url: `http://localhost:3000/get-operations`,
+    headers: { Authorization: 'Basic YWRtaW46KlZhbGVudGlub18yMDE5Kg==' },
+  };
+
+  try {
+    const response = await axios(options)
+    return response.data
+  } catch (error) {
+    console.log(error);
+  }
+};
+

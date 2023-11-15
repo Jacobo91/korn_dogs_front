@@ -1,8 +1,9 @@
 import * as React from 'react';
 import '../index.css'
 import Modal from '@mui/material/Modal';
-import { Loader } from '.'
-import { Product } from 'types';
+// import { Loader } from '.'
+import { Operation, Product } from 'types';
+import { createOperation, updateProducts } from '../../lib/services';
 
 interface MyModalProps {
     open: boolean;
@@ -18,13 +19,6 @@ interface MyModalProps {
 
 export default function MyModal({ open, trackedPO, setOpen } : MyModalProps) {
     
-    // const [error, setError] = React.useState<string>("");
-    // const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-    const saveOnDailyOps = async () => {
-        console.log(trackedPO);
-    }
-
     const closeModal = () => {
         setOpen(false)
     }
@@ -34,8 +28,21 @@ export default function MyModal({ open, trackedPO, setOpen } : MyModalProps) {
         const price = curr.cost;
 
         return acc + quantity * price
-    }, 0)
+    }, 0);
 
+    const handleOperationSubmission = async (trackedPO: Operation) => {
+        const items = trackedPO && trackedPO.items;
+        try {
+            const response = await createOperation(trackedPO);
+            const updatingInventories = await updateProducts(items)
+            setOpen(false);
+            window.location.reload();
+            return response; updatingInventories
+        } catch (error) {
+            console.log(error)
+        }
+    };
+    
     return (
     <div>
         <Modal
@@ -74,7 +81,7 @@ export default function MyModal({ open, trackedPO, setOpen } : MyModalProps) {
                                         <td>Total:</td>
                                         <td></td>
                                         <td></td>
-                                        <td className='outgoing-cash'>- ${total.toLocaleString()}</td>
+                                        <td className='outgoing-cash'>${total.toLocaleString()}</td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -84,7 +91,7 @@ export default function MyModal({ open, trackedPO, setOpen } : MyModalProps) {
                                 ? 
                                     (<button className='btn' onClick={closeModal}>Close</button>) 
                                 : 
-                                    (<button className='btn' onClick={saveOnDailyOps}> Confirm Purchase</button>)
+                                    (<button className='btn' onClick={() => handleOperationSubmission(trackedPO)}> Confirm Purchase</button>)
                             }
                         </div>
                 </div>

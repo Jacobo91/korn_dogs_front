@@ -50,18 +50,18 @@ export type NewUser = {
 }
 
 export type Product = {
-        _id: number,
+        _id: string,
         quantity: number,
         image: string,
-        color?: string,
         cost: number,
         supplier?: string,
         name: string,
         size: string,
-        type: string
+        type: string,
+        price: number
 }
 
-export interface PurchaseOrder {
+export interface Operation {
     items: Product[];
     date: string;
     type: string;

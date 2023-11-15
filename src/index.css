@@ -75,6 +75,7 @@ h2 {
   color: white;
   background: var(--orange-dark);
   border: transparent;
+  margin-top: 1rem;
 }
 
 .btn--circled {
