@@ -52,7 +52,7 @@ function Inventory() {
         const productDescription = name.split(" ");
         const productName = productDescription[0];
         const productSize= productDescription[1];
-        const productTargetIndex = purchaseOrder.findIndex((product) => product.name === productName && product.size === productSize);
+        const productTargetIndex = purchaseOrder.findIndex((product: Product) => product.name === productName && product.size === productSize);
         purchaseOrder[productTargetIndex]["quantity"] = Number(value);
     }
 
@@ -115,7 +115,7 @@ function Inventory() {
     return (
         <div className="page-wrapper">
             <MyModal open={open} trackedPO={trackedPO} setOpen={setOpen}/>
-            <div className='inner-wrapper'>
+            <div className='accordion-wrapper'>
                 <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
@@ -126,12 +126,6 @@ function Inventory() {
                     </AccordionSummary>
                     <AccordionDetails>
                         <form action="" className="form" onSubmit={handleProductCreation}>
-
-                            {/* <label htmlFor="_id">id:</label>
-                            <input type="text" name='_id' id='_id' disabled/>
-
-                            <label htmlFor="quantity">Quantity:</label>
-                            <input type="number" name='quantity' id='quantity' disabled/> */}
 
                             <label htmlFor="image">Image:</label>
                             <input type="url" name='image' id='image' value={product.image} onChange={handleProductChange} placeholder="insert one drive embeded image url" required/>
